@@ -1,5 +1,6 @@
 var gameSnake;
 
+
 window.addEventListener('keydown', this.controller, false);
 
 function startGame(){
@@ -27,7 +28,7 @@ var gameArea = {
             this.ctx.lineTo(20*y,480);      
         }
         this.ctx.strokeStyle="#CCCCCC";
-        this.ctx.stroke();  
+        this.ctx.stroke();
     },
     clear : function() {
         this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
@@ -41,11 +42,28 @@ function snake(width, height, color, x, y){
     this.speedY = 0;
     this.x = x;
     this.y = y;
+    this.pastX = new Array(100);
+    this.pastY = new Array(100);
+    this.nTail = 0;
+    this.tempX = 0;
+    this.tempY = 0;
+    this.temp2X = 0;
+    this.temp2Y = 0;
+    this.score = 0;
+    this.foodX = Math.floor(Math.random() * 32)*20;
+    this.foodY = Math.floor(Math.random() * 24)*20;
     this.update = function() {
         ctx = gameArea.ctx;
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
+    },
+    this.tail = function(){
+        for(var i=0; i< this.nTail; i++){
+            ctx = gameArea.ctx;
+            ctx.fillStyle = color;
+            ctx.fillRect(this.pastX[i], this.pastY[i], this.width, this.height);
+        } 
+    },
     this.collisions = function(){
         if(this.x == 640){
             this.x = -20;
@@ -56,8 +74,34 @@ function snake(width, height, color, x, y){
         }else if(this.y == -20){
             this.y = 480;
         }
+    },
+    this.food = function(){
+        ctx = gameArea.ctx;
+        ctx.fillStyle = "#BAD7F2";
+        ctx.fillRect(this.foodX, this.foodY, this.width, this.height);
     }
     this.newPosition = function() {
+        
+        if(this.x == this.foodX && this.y == this.foodY){
+            this.score += 10;
+            this.nTail += 1;
+            this.foodX = Math.floor(Math.random() * 32)*20;
+            this.foodY = Math.floor(Math.random() * 24)*20;
+            console.log("score : " + this.score);     
+        }
+        
+        this.pastX[0] = this.x;
+        this.pastY[0] = this.y;
+        this.tempX = this.pastX[0];
+        this.tempY = this.pastY[0];
+        for(var i = 0; i < this.nTail; i++){
+            this.temp2X = this.pastX[i];
+            this.temp2Y = this.pastY[i];
+            this.pastX[i] = this.tempX;
+            this.pastY[i] = this.tempY;
+            this.tempX = this.temp2X;
+            this.tempY = this.temp2Y;
+        }
         this.x += this.speedX;
         this.y += this.speedY;
     }
@@ -68,17 +112,19 @@ function updateGameArea() {
     gameArea.drawGrid();
     gameSnake.collisions();
     gameSnake.newPosition();
+    gameSnake.tail();
+    gameSnake.food();
     gameSnake.update();
 }
 
 var endofkey;
 
 
-function controller(event) {   
+function controller(event) {    
     if(event.which == 38){ //up
         if(window.endofkey==40){
             event.which=40;
-        }else{
+        }else{ 
             gameSnake.speedY = -20;
             gameSnake.speedX = 0;
         }
