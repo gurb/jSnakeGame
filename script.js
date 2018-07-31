@@ -48,9 +48,9 @@ function snake(width, height, color, x, y){
     }
     this.collisions = function(){
         if(this.x == 640){
-            this.x = 0;
+            this.x = -20;
         }else if(this.y == 480){
-            this.y = 0;
+            this.y = -20;
         }else if(this.x == -20){
             this.x = 640;
         }else if(this.y == -20){
@@ -58,7 +58,6 @@ function snake(width, height, color, x, y){
         }
     }
     this.newPosition = function() {
-        
         this.x += this.speedX;
         this.y += this.speedY;
     }
@@ -105,6 +104,9 @@ function controller(event) {
             gameSnake.speedY = 0;
         }
     }
+    
+    //hareket sınırlaması
+    //ör -> sağa giderken sola gidilmez da!
     if(window.endofkey==37){
         if(event.which==39){
             window.endofkey = 37;
@@ -112,21 +114,21 @@ function controller(event) {
             window.endofkey = event.which;
         }
     }
-    if(window.endofkey==38){
+    else if(window.endofkey==38){
         if(event.which==40){
             window.endofkey = 38;
         }else{
             window.endofkey = event.which;
         }
     }
-    if(window.endofkey==39){
+    else if(window.endofkey==39){
         if(event.which==37){
             window.endofkey = 39;
         }else{
             window.endofkey = event.which;
         }
     }
-    if(window.endofkey==40){
+    else if(window.endofkey==40){
         if(event.which==38){
             window.endofkey = 40;
         }else{
