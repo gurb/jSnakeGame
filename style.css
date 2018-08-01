@@ -1,0 +1,11 @@
+canvas{
+    width:100%;
+    border: 5px solid #ccc;
+    background: #f1f1f1;
+}
+#puan{
+    width:100%;
+    font-size:30px;
+    font-weight:500;
+    border:1px solid #ccc;
+}
