@@ -1,7 +1,13 @@
 var gameSnake;
-
+var elem = document.getElementById("oyun");
 
 window.addEventListener('keydown', this.controller, false);
+
+//Mozilla ve Opera9+
+if (document.addEventListener){
+    document.addEventListener("DOMContentLoaded", startGame, false);
+    document.addEventListener("keydown", controller, false);
+}
 
 function startGame(){
     gameArea.start();
@@ -10,11 +16,16 @@ function startGame(){
 
 var gameArea = {
     canvas : document.createElement("canvas"),
+    skor : document.createElement("div"),
     start : function() {
         this.canvas.width = 640;
         this.canvas.height = 480;
         this.ctx = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.skor.id = "puan";
+        //this.txtSkor = this.skor.getContext;
+        //document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        elem.appendChild(this.canvas);
+        elem.appendChild(this.skor);
         this.interval = setInterval(updateGameArea, 150);
     },
     drawGrid : function() {
@@ -81,13 +92,13 @@ function snake(width, height, color, x, y){
         ctx.fillRect(this.foodX, this.foodY, this.width, this.height);
     }
     this.newPosition = function() {
-        
+        document.getElementById("puan").innerHTML = 'puan' + this.score;
         if(this.x == this.foodX && this.y == this.foodY){
             this.score += 10;
             this.nTail += 1;
             this.foodX = Math.floor(Math.random() * 32)*20;
             this.foodY = Math.floor(Math.random() * 24)*20;
-            console.log("score : " + this.score);     
+            
         }
         
         this.pastX[0] = this.x;
