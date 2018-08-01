@@ -92,7 +92,7 @@ function snake(width, height, color, x, y){
         ctx.fillRect(this.foodX, this.foodY, this.width, this.height);
     }
     this.newPosition = function() {
-        document.getElementById("puan").innerHTML = 'puan' + this.score;
+        document.getElementById("puan").innerHTML = 'Puan: ' + this.score;
         if(this.x == this.foodX && this.y == this.foodY){
             this.score += 10;
             this.nTail += 1;
@@ -130,32 +130,35 @@ function updateGameArea() {
 
 var endofkey;
 
-
+//w -> 87
+//s -> 83
+//a -> 65
+//d -> 68
 function controller(event) {    
-    if(event.which == 38){ //up
-        if(window.endofkey==40){
-            event.which=40;
+    if(event.which == 87){ //up
+        if(window.endofkey==83){
+            event.which=83;
         }else{ 
             gameSnake.speedY = -20;
             gameSnake.speedX = 0;
         }
-    }else if(event.which == 37){ //left
-        if(window.endofkey==39){
-            event.which=39;
+    }else if(event.which == 65){ //left
+        if(window.endofkey==68){
+            event.which=68;
         }else{
             gameSnake.speedX = -20;
             gameSnake.speedY = 0;         
         }
-    }else if(event.which == 40){ //down
-        if(window.endofkey==38){
-            event.which=38;
+    }else if(event.which == 83){ //down
+        if(window.endofkey==87){
+            event.which=87;
         }else{
             gameSnake.speedY = 20;
             gameSnake.speedX = 0;        
         }    
-    }else if(event.which == 39){ //right
-        if(window.endofkey==37){
-            event.which=37;
+    }else if(event.which == 68){ //right
+        if(window.endofkey==65){
+            event.which=65;
         }else{
             gameSnake.speedX = 20;
             gameSnake.speedY = 0;
@@ -164,30 +167,30 @@ function controller(event) {
     
     //hareket sınırlaması
     //ör -> sağa giderken sola gidilmez da!
-    if(window.endofkey==37){
-        if(event.which==39){
-            window.endofkey = 37;
+    if(window.endofkey==65){
+        if(event.which==68){
+            window.endofkey = 65;
         }else{
             window.endofkey = event.which;
         }
     }
-    else if(window.endofkey==38){
-        if(event.which==40){
-            window.endofkey = 38;
+    else if(window.endofkey==87){
+        if(event.which==83){
+            window.endofkey = 87;
         }else{
             window.endofkey = event.which;
         }
     }
-    else if(window.endofkey==39){
-        if(event.which==37){
-            window.endofkey = 39;
+    else if(window.endofkey==68){
+        if(event.which==65){
+            window.endofkey = 68;
         }else{
             window.endofkey = event.which;
         }
     }
-    else if(window.endofkey==40){
-        if(event.which==38){
-            window.endofkey = 40;
+    else if(window.endofkey==83){
+        if(event.which==87){
+            window.endofkey = 83;
         }else{
             window.endofkey = event.which;
         }
